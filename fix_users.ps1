@@ -1,8 +1,8 @@
 # removes unauthorized users, demotes unauthorized admins, and adds users that should exist but don't
 
 # get authorized user and admins from the text files
-$users_file_data = Get-Content 'users.txt'
-$admins_file_data = Get-Content 'admins.txt'
+$users_file_data = Get-Content 'inputs/users.txt'
+$admins_file_data = Get-Content 'inputs/admins.txt'
 
 # combine both the users and admins to get every authorized user on the computer
 [System.Collections.ArrayList]$auth_users = $users_file_data + $admins_file_data
