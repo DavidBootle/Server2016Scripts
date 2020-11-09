@@ -4,10 +4,10 @@
 $password = ConvertTo-SecureString "Password123!@#" -AsPlainText -Force
 
 # get content of users.txt and store it as an array, where each array item is a line of the file
-$users_file_data = Get-Content 'users.txt'
+$users_file_data = Get-Content 'inputs/users.txt'
 
 # get content of admins.txt and store it asn an array, where each array item is a line of the file
-$admins_file_data = Get-Content 'admins.txt'
+$admins_file_data = Get-Content 'inputs/admins.txt'
 
 # combine the two arrays to get one arraylist with both the admin and user account names
 # (it has to be an arraylist because the current user's name has to be removed, and only arraylist support removals)
