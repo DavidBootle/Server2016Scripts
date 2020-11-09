@@ -17,9 +17,6 @@ $admins_file_data = Get-Content 'admins.txt'
 $current_user_name = $env:USERNAME # the username of the current user
 $auth_users.Remove($current_user_name)
 
-# convert the arraylist into an array to avoid issues with looping
-$auth_users = $auth_users.ToArray()
-
 # loop through each user in the array
 $auth_users | ForEach-Object -Process {
 
