@@ -29,20 +29,20 @@ Get-LocalUser | ForEach-Object -Process {
 $auth_admins += "Administrator"
 
 # group user account names are formatted as COMPUTERNAME\username, so add COMPUTERNAME\ to each user in the auth admins list so that they can be compared
-$auth_users = $auth_users | ForEach-Object -Process { "$env:COMPUTERNAME\$_" }
+$auth_admins = $auth_admins | ForEach-Object -Process { "$env:COMPUTERNAME\$_" }
 
 # loop through every administrator
 Get-LocalGroupMember -Group "Administrators" | ForEach-Object -Process {
     # if the name of the administrator is not in the authorized user list, remove the user from administrators
     if ($auth_admins -notcontains $_.Name) {
-        Remove-LocalGroupMember -Group "Administrators" -Member $_.Name
+        Remove-LocalGroupMember -Group "Administrators" -Member $_.Name -Confirm
         Write-Output "Removing $($_.Name) from Administrators"
     }
 }
 
 # ADD USERS
 # get a new auth_users without the default accounts
-$auth_users = $admins_file_data
+$auth_users = $users_file_data
 
 # get current users
 $current_users = Get-LocalUser
@@ -54,7 +54,7 @@ $password = ConvertTo-SecureString "Password123!@#" -AsPlainText -Force
 $auth_users | ForEach-Object -Process {
     # if the user doesn't already exist, add the user
     if ($current_users.Name -notcontains $_) {
-        New-LocalUser $_ -Password $password
+        New-LocalUser $_ -Password $password -Confirm
         Write-Output "Added user $_"
     }
 }
