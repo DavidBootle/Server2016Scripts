@@ -1,0 +1,7 @@
+# Lines starting with # are commented
+#
+# In this file, list any critical services, each service on a new line
+#
+# Current Services:
+# FTP
+# RDP
