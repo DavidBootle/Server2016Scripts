@@ -25,11 +25,15 @@ $auth_users | ForEach-Object -Process {
     try {
         Get-LocalUser -Name $_
 
-        # this means that the user exists, so set their password
-        Set-LocalUser -Name $_ -Password $password -Confirm
+        try {
+            # this means that the user exists, so set their password
+            Set-LocalUser -Name $_ -Password $password -Confirm
 
-        # write that the password was set
-        Write-Output "Set password for LocalUser $_."
+            # write that the password was set
+            Write-Output "Set secure password for $_"
+        } catch {
+            Write-Output "Failed to set secure password for $_"
+        }
     }
     catch {
         # if it failed, it means the user didn't exist, write to the console
