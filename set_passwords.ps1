@@ -23,7 +23,7 @@ $auth_users | ForEach-Object -Process {
 
     # check to make sure the user exists for logging purposes
     try {
-        Get-LocalUser -Name $_
+        Get-LocalUser -Name $_ | Out-Null # pipe to null so that output doesn't show up in console
 
         try {
             # this means that the user exists, so set their password
