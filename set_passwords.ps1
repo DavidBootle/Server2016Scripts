@@ -5,7 +5,7 @@
 $password = ConvertTo-SecureString "Password123!@#" -AsPlainText -Force
 
 # get content of users.txt and store it as an array, where each array item is a line of the file
-$users_file_data = Get-Content 'inputs/users.txt'
+[System.Collections.ArrayList]$users_file_data = Get-Content 'inputs/users.txt'
 
 # get content of admins.txt and store it asn an array, where each array item is a line of the file
 $admins_file_data = Get-Content 'inputs/admins.txt'
