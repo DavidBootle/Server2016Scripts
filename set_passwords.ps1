@@ -1,4 +1,5 @@
 # sets secure passwords for every user listed in the users and admins files combined, minus the current user
+# verified working as intended on Server 2016 11/12/2020
 
 # generates a secure string object using the password string
 $password = ConvertTo-SecureString "Password123!@#" -AsPlainText -Force
@@ -25,7 +26,7 @@ $auth_users | ForEach-Object -Process {
         Get-LocalUser -Name $_
 
         # this means that the user exists, so set their password
-        Set-LocalUser -Name $_ -Password $password
+        Set-LocalUser -Name $_ -Password $password -Confirm
 
         # write that the password was set
         Write-Output "Set password for LocalUser $_."
