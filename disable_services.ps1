@@ -15,7 +15,7 @@ $crit_services = $temp
 # ftp
 if ($crit_services -notcontains "FTP") {
     try {
-        Disable-WindowsOptionalFeature -Online -FeatureName IIS-FTPServer # disable the feature
+        Disable-WindowsOptionalFeature -Online -FeatureName IIS-FTPServer | Out-Null # disable the feature
         Stop-Service 'Server' -Force -Confirm # stop the service
         Write-Output "Disabled FTP Server"
     }
@@ -29,7 +29,7 @@ if ($crit_services -notcontains "FTP") {
 if ($crit_services -notcontains "RDP") {
     try {
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 1 # sets the actual toggle value to turn off rdp in the "allow rdp" menu
-        Disable-WindowsOptionalFeature -Online -FeatureName Remote-Desktop-Services #turns off the feature if enabled
+        Disable-WindowsOptionalFeature -Online -FeatureName Remote-Desktop-Services | Out-Null #turns off the feature if enabled
         Stop-Service 'Remote Desktop Services' -Force -Confirm # turn off the actual service
         Write-Output "Disabled RDP"
     } catch {
