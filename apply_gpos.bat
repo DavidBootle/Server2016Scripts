@@ -1,5 +1,5 @@
 @echo on
-cd %HOMEPATH%\Desktop\scripts\gpos
+cd %SCRIPTDIR%\gpos
 LGPO.exe /g 1
 LGPO.exe /g 2
 LGPO.exe /g 3
