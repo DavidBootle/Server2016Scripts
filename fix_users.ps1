@@ -65,7 +65,7 @@ $auth_users | ForEach-Object -Process {
     # if the user doesn't already exist, add the user
     if ($current_users.Name -notcontains $_) {
         try {
-            New-LocalUser $_ -Password $password -Confirm
+            New-LocalUser $_ -Password $password -Confirm | Out-Null # pipe to null so that extra text is not shown on the logs
             Write-Output "Added user $_"
         } catch {
             Write-Output "Failed to add user $_"
