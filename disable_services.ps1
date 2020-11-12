@@ -1,4 +1,7 @@
 # disables non-critical services that are not supposed to be enabled unless they're critical
+# verified working on Server 2016 11/12/2020
+
+Set-Location $env:SCRIPTDIR
 
 # get critical services
 $crit_services = @(Get-Content 'inputs/critservices.txt')

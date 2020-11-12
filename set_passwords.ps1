@@ -1,6 +1,8 @@
 # sets secure passwords for every user listed in the users and admins files combined, minus the current user
 # verified working as intended on Server 2016 11/12/2020
 
+Set-Location $env:SCRIPTDIR
+
 # generates a secure string object using the password string
 $password = ConvertTo-SecureString "Password123!@#" -AsPlainText -Force
 

@@ -1,6 +1,8 @@
 # removes unauthorized users, demotes unauthorized admins, and adds users that should exist but don't
 # verified working as intended on Server 2016 - 11/12/2020
 
+Set-Location $env:SCRIPTDIR
+
 # get authorized user and admins from the text files
 $users_file_data = Get-Content 'inputs/users.txt'
 $admins_file_data = Get-Content 'inputs/admins.txt'
