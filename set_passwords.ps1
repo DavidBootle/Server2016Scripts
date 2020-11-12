@@ -10,6 +10,13 @@ $users_file_data = Get-Content 'inputs/users.txt'
 # get content of admins.txt and store it asn an array, where each array item is a line of the file
 $admins_file_data = Get-Content 'inputs/admins.txt'
 
+# remove admins from users (protecting against user error)
+$admins_file_data | ForEach-Object -Process {
+    if ($users_file_data -contains $_) {
+        $users_file_data.Remove($_)
+    }
+}
+
 # combine the two arrays to get one arraylist with both the admin and user account names
 # (it has to be an arraylist because the current user's name has to be removed, and only arraylist support removals)
 [System.Collections.ArrayList]$auth_users = $users_file_data + $admins_file_data
