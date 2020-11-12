@@ -17,7 +17,7 @@ Get-LocalUser | ForEach-Object -Process {
     # Enabled : $_.Enabled
     # Description: $_.Description
 
-    if ($_.Name -notcontains $auth_users) {
+    if ($auth_users -notcontains $_) {
         # if the name of the user is not in the authorized user list, delete the user
         Remove-LocalUser $_ -Confirm
     }
