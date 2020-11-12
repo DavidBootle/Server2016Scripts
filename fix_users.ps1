@@ -1,5 +1,4 @@
 # removes unauthorized users, demotes unauthorized admins, and adds users that should exist but don't
-# verified working as intended on Server 2016 11/12/2020
 
 # get authorized user and admins from the text files
 $users_file_data = Get-Content 'inputs/users.txt'
@@ -20,7 +19,13 @@ Get-LocalUser | ForEach-Object -Process {
 
     if ($auth_users -notcontains $_) {
         # if the name of the user is not in the authorized user list, delete the user
-        Remove-LocalUser $_ -Confirm
+        try {
+            Remove-LocalUser $_ -Confirm
+            Write-Output "Removed unauthorized user $_"
+        } catch {
+            Write-Output "Failed to remove unauthorized user $_"
+        }
+        
     }
 }
 
@@ -36,8 +41,12 @@ $auth_admins = $auth_admins | ForEach-Object -Process { "$env:COMPUTERNAME\$_" }
 Get-LocalGroupMember -Group "Administrators" | ForEach-Object -Process {
     # if the name of the administrator is not in the authorized user list, remove the user from administrators
     if ($auth_admins -notcontains $_.Name) {
-        Remove-LocalGroupMember -Group "Administrators" -Member $_.Name -Confirm
-        Write-Output "Removing $($_.Name) from Administrators"
+        try {
+            Remove-LocalGroupMember -Group "Administrators" -Member $_.Name -Confirm
+            Write-Output "Removed $($_.Name) from Administrators"
+        } catch {
+            Write-Output "Failed to remove $($_.Name) from Administrators"
+        }
     }
 }
 
@@ -55,7 +64,11 @@ $password = ConvertTo-SecureString "Password123!@#" -AsPlainText -Force
 $auth_users | ForEach-Object -Process {
     # if the user doesn't already exist, add the user
     if ($current_users.Name -notcontains $_) {
-        New-LocalUser $_ -Password $password -Confirm
-        Write-Output "Added user $_"
+        try {
+            New-LocalUser $_ -Password $password -Confirm
+            Write-Output "Added user $_"
+        } catch {
+            Write-Output "Failed to add user $_"
+        }
     }
 }
